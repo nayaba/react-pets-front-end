@@ -4,6 +4,7 @@ import * as petService from './services/petService'
 
 import PetList from "./component/PetList"
 import PetDetail from './component/PetDetail'
+import PetForm from './component/PetForm'
 
 const App = () => {
 
@@ -12,6 +13,15 @@ const App = () => {
 
   const updateSelected = (pet) => {
     setSelected(pet)
+  }
+
+  const handleAddPet = async (formData) => {
+    try {
+      const newPet = await petService.create(formData)
+      setPetList([newPet, ...petList])
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -30,6 +40,7 @@ const App = () => {
     <div>
       <PetList petList={petList} updateSelected={updateSelected} />
       <PetDetail selected={selected} />
+      <PetForm handleAddPet={handleAddPet} />
     </div>
   )
 }
