@@ -13,9 +13,13 @@ const PetForm = (props) => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault()
-    props.handleAddPet(formData)
+    if (props.selected) {
+      props.handleUpdatePet(formData, props.selected._id)
+    } else {
+      props.handleAddPet(formData)
+    }
     setFormData(initialState)
   }
 
@@ -46,7 +50,9 @@ const PetForm = (props) => {
           onChange={handleChange}
         />
         <br />
-        <button type="submit">Add New Pet</button>
+        <button type="submit">
+          {props.selected ? 'Update Pet' : 'Add New Pet'}
+        </button>
       </form>
     </div>
   )
