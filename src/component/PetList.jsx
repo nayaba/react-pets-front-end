@@ -1,7 +1,7 @@
 const PetList = props => {
 
     const pets = props.petList.map((pet) => {
-        return <li>{pet.name}</li>
+        return <a onClick={() => props.updateSelected(pet)}><li>{pet.name}</li></a>
     })
 
   return (
@@ -10,7 +10,7 @@ const PetList = props => {
       {!props.petList.length ? 
         <h2>No Pets Yet!</h2> :
         <ul>{pets}</ul>
-    }
+      }
     </div>
   )
 }
