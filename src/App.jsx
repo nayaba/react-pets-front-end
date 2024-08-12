@@ -45,6 +45,22 @@ const App = () => {
     }
   }
 
+  const handleRemovePet = async petId => {
+    console.log('petId, ', petId)
+    try {
+      const deletedPet = await petService.deletePet(petId)
+      console.log(deletedPet._id)
+      // if (deletedPet.error) {
+      //   throw new Error(deletedPet.error)
+      // }
+      setPetList(petList.filter((pet) => pet._id !== deletedPet._id))
+      setSelected(null)
+      setIsFormOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     const fetchPets = async () => {
       try {
@@ -68,7 +84,7 @@ const App = () => {
       {isFormOpen ? (
         <PetForm handleAddPet={handleAddPet} selected={selected} handleUpdatePet={handleUpdatePet} />
       ) : (
-        <PetDetail selected={selected} handleFormView={handleFormView} />
+        <PetDetail selected={selected} handleFormView={handleFormView} handleRemovePet={handleRemovePet} />
       )}
     </div>
   )

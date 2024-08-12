@@ -37,8 +37,21 @@ const updatePet = async (formData, petId) => {
     }
   }
 
+  const deletePet = async petId => {
+    try {
+      const deletedPet = await fetch(`http://localhost:3000/pets/${petId}`, {
+        method: 'DELETE',
+      })
+      console.log('service: ', deletedPet)
+      return deletedPet.json()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 export {
     index,
     create,
-    updatePet
+    updatePet,
+    deletePet
 }
