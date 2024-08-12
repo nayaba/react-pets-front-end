@@ -2,20 +2,24 @@ import { useEffect, useState } from 'react'
 
 import * as petService from './services/petService'
 
-import PetList from "./component/PetList"
+import PetList from './component/PetList'
 import PetDetail from './component/PetDetail'
 import PetForm from './component/PetForm'
 
 const App = () => {
+  const [petList, setPetList] = useState([])
+  const [selected, setSelected] = useState(null)
+  const [isFormOpen, setIsFormOpen] = useState(false)
 
-    const [petList, setPetList] = useState([])
-    const [selected, setSelected] = useState(null)
-
-  const updateSelected = (pet) => {
+  const updateSelected = pet => {
     setSelected(pet)
   }
 
-  const handleAddPet = async (formData) => {
+  const handleFormView = () => {
+    setIsFormOpen(!isFormOpen)
+  }
+
+  const handleAddPet = async formData => {
     try {
       const newPet = await petService.create(formData)
       setPetList([newPet, ...petList])
@@ -38,9 +42,17 @@ const App = () => {
 
   return (
     <div>
-      <PetList petList={petList} updateSelected={updateSelected} />
-      <PetDetail selected={selected} />
-      <PetForm handleAddPet={handleAddPet} />
+      <PetList
+        petList={petList}
+        updateSelected={updateSelected}
+        handleFormView={handleFormView}
+        isFormOpen={isFormOpen}
+      />
+      {isFormOpen ? (
+        <PetForm handleAddPet={handleAddPet} />
+      ) : (
+        <PetDetail selected={selected} />
+      )}
     </div>
   )
 }
