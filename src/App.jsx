@@ -29,7 +29,7 @@ const App = () => {
   return (
     <div>
       <PetList petList={petList} updateSelected={updateSelected} />
-      <PetDetail />
+      <PetDetail selected={selected} />
     </div>
   )
 }
