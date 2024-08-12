@@ -15,7 +15,8 @@ const App = () => {
     setSelected(pet)
   }
 
-  const handleFormView = () => {
+  const handleFormView = (pet) => {
+    if (!pet.name) setSelected(null)
     setIsFormOpen(!isFormOpen)
   }
 
@@ -49,9 +50,9 @@ const App = () => {
         isFormOpen={isFormOpen}
       />
       {isFormOpen ? (
-        <PetForm handleAddPet={handleAddPet} />
+        <PetForm handleAddPet={handleAddPet} selected={selected} />
       ) : (
-        <PetDetail selected={selected} />
+        <PetDetail selected={selected} handleFormView={handleFormView} />
       )}
     </div>
   )

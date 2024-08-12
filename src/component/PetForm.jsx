@@ -7,7 +7,7 @@ const PetForm = (props) => {
     breed: '',
   }
 
-  const [formData, setFormData] = useState(initialState)
+  const [formData, setFormData] = useState(props.selected ? props.selected : initialState)
 
   const handleChange = event => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
